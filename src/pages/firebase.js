@@ -8,14 +8,14 @@ import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAHVuAx7J4nOOAvrmxIkf5-3f2R_lQlCx4",
-  authDomain: "gst-reconcilation-auth.firebaseapp.com",
-  projectId: "gst-reconcilation-auth",
-  storageBucket: "gst-reconcilation-auth.appspot.com",
-  messagingSenderId: "105165713112",
-  appId: "1:105165713112:web:9bbb9aff0c624ae56cf1ad"
+  apiKey: "AIzaSyCtkJYdjvi4ZxeYWOh4Cmzafm6snYoiHM0",
+  authDomain: "gst-reconciliation-43374.firebaseapp.com",
+  projectId: "gst-reconciliation-43374",
+  storageBucket: "gst-reconciliation-43374.appspot.com",
+  messagingSenderId: "344288214092",
+  appId: "1:344288214092:web:d06968ff67de4a620e48e9",
+  measurementId: "G-MN9596DE45"
 };
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 

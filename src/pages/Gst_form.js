@@ -130,7 +130,7 @@ export default function Gst_Form() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5000/api/runJenkinsJob', {
+      const response = await fetch(' https://api-issp7n7t4a-uc.a.run.app/api/runJenkinsJob', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

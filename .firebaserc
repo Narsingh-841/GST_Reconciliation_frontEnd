@@ -1,5 +1,9 @@
 {
   "projects": {
-    "default": "gst-reconcilation-auth"
-  }
+    "default": "gst-reconciliation-43374",
+    "staging": "gst-reconciliation-43374"
+  },
+  "targets": {},
+  "etags": {},
+  "dataconnectEmulatorConfig": {}
 }
