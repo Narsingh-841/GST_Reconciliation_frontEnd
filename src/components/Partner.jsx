@@ -1,7 +1,6 @@
 import React from "react";
 import fortunaImage from "../assets/Fortunalogo.png";
 import DccImage from "../assets/DCC logo.png";
-import IQPCImage from "../assets/IQPC-logo.png";
 
 export default function Partner() {
   return (
@@ -23,11 +22,11 @@ export default function Partner() {
             alt="DCC"
             className="rounded-full h-10 w-40 object-contain"
           />
-          <img
+          {/* <img
             src={IQPCImage}
             alt="IQPC"
             className="rounded-full h-10 w-40 object-contain"
-          />
+          /> */}
           {/* Uncomment and add additional logos as needed */}
           {/* <img
             src={Image}

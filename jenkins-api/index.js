@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const { URLSearchParams } = require('url');
 const functions = require('firebase-functions');
 require('dotenv').config();
-
+const emailApi = require('./email').api; // Ensure this is importing the exported function
 
 // Retrieve Jenkins credentials from environment variables
 const JENKINS_USERNAME = process.env.JENKINS_USERNAME || functions.config().jenkins?.username;
@@ -69,6 +69,9 @@ app.post('/api/runJenkinsJob', async (req, res) => {
     res.status(500).send('Error occurred while triggering Jenkins job');
   }
 });
+
+// Use email API routes
+app.use(emailApi);
 
 // Firebase Functions export
 exports.api = onRequest(app);

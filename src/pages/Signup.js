@@ -99,8 +99,11 @@ export default function Signup() {
       const user = userCredential.user;
 
       if (user) {
+        const token = await user.getIdToken();
+        localStorage.setItem("authToken", token);
         // Check if user data already exists in Firestore
         const userDoc = await getDoc(doc(db, "user", user.uid));
+
         if (!userDoc.exists()) {
           // Only set document if it does not exist
           await setDoc(doc(db, "user", user.uid), {

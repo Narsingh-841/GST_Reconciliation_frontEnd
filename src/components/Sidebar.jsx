@@ -11,7 +11,7 @@ import { BiHelpCircle } from "react-icons/bi";
 import { FaSquarespace } from "react-icons/fa";
 
 
-export default function Sidebar() {
+export const  Sidebar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [user, setUser] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -44,12 +44,14 @@ export default function Sidebar() {
     if (confirmLogout) {
       auth.signOut().then(() => {
         console.log("User signed out");
+        localStorage.removeItem("authToken"); // Remove the token from local storage
         window.location.href = "/";
       }).catch(error => {
         console.error("Error signing out: ", error);
       });
     }
   };
+  
 
   const isActive = (path) => location.pathname === path ? 'bg-gray-700' : '';
 

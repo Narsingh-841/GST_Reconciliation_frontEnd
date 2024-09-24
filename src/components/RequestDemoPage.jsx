@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import emailjs from 'emailjs-com';
+import axios from 'axios';
 import Requestdemo from '../assets/RequestDemo.gif'; 
 import Navbar from '../components/Navbar'; 
 import { toast, ToastContainer } from 'react-toastify';
@@ -14,6 +14,7 @@ const RequestDemoPage = () => {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false); // New loading state
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,22 +33,23 @@ const RequestDemoPage = () => {
       return;
     }
 
+    setIsLoading(true); // Set loading state to true
     try {
-      // Send email via EmailJS
-      await emailjs.sendForm('service_cfgfk1x', 'template_ntjfzyb', e.target, 'hwOHuR-Ht5oVNTJnY');
-      setIsSubmitted(true);
-      setError(null);
-      setFormData({
-        name: '',
-        email: '',
-        company: '',
-        message: '',
+      // Send request to the backend API for demo request
+      await axios.post('https://api-issp7n7t4a-uc.a.run.app/api/send-demo-email', {
+        name: formData.name,
+        email: formData.email,
+        company: formData.company,
+        message: formData.message,
       });
+
+      setIsSubmitted(true);
       toast.success('Demo request sent successfully!', { position: 'top-center' });
     } catch (error) {
-      console.error('EmailJS Error:', error.message);
       setError('Something went wrong. Please try again.');
       toast.error('Failed to send demo request. Please try again later.', { position: 'bottom-center' });
+    } finally {
+      setIsLoading(false); // Reset loading state
     }
   };
 
@@ -115,9 +117,10 @@ const RequestDemoPage = () => {
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-gray-600 text-white py-2 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100"
+                  disabled={isLoading} // Disable button while loading
+                  className={`w-full bg-gray-600 text-white py-2 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
-                  Request Demo
+                  {isLoading ? 'Sending...' : 'Request Demo'} {/* Change button text when loading */}
                 </button>
               </form>
             )}

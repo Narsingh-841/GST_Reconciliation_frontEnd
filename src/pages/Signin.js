@@ -3,11 +3,17 @@ import Image from "../assets/Login.gif";
 import { FaMicrosoft, FaGoogle, FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, OAuthProvider, sendPasswordResetEmail } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+  OAuthProvider,
+  sendPasswordResetEmail,
+} from "firebase/auth";
 import { auth, db } from "./firebase";
 import { setDoc, doc, getDoc } from "firebase/firestore";
 import { toast, ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Signin() {
   const [email, setEmail] = useState("");
@@ -22,10 +28,12 @@ export default function Signin() {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
+      // Store the token for authentication
+      localStorage.setItem("authToken", userCredential.user.accessToken);
+
       // Check if user data exists in Firestore
       const userDoc = await getDoc(doc(db, "user", user.uid));
       if (!userDoc.exists()) {
-        // If user data doesn't exist, create it
         await setDoc(doc(db, "user", user.uid), {
           email: user.email,
           firstName: user.displayName?.split(" ")[0] || "",
@@ -37,7 +45,7 @@ export default function Signin() {
       toast.success("User logged in successfully", {
         position: "top-center",
       });
-      window.location.href = "/acc_profile";
+      window.location.href = "/acc_profile"; // Redirect to profile page
     } catch (error) {
       console.error("Sign-in Error:", error.message);
       toast.error("Failed to sign in. Please check your email and password.", {
@@ -54,10 +62,12 @@ export default function Signin() {
         const { email, uid, displayName, photoURL } = result.user;
         const [firstName, lastName] = (displayName || "").split(" ");
 
+        // Store the token for authentication
+        localStorage.setItem("authToken", result.user.accessToken);
+
         // Check if user data exists in Firestore
         const userDoc = await getDoc(doc(db, "user", uid));
         if (!userDoc.exists()) {
-          // If user data doesn't exist, create it
           await setDoc(doc(db, "user", uid), {
             email: email,
             firstName: firstName,
@@ -69,7 +79,7 @@ export default function Signin() {
         toast.success("User logged in successfully", {
           position: "top-center",
         });
-        window.location.href = "/acc_profile";
+        window.location.href = "/acc_profile"; // Redirect to profile page
       }
     } catch (error) {
       console.error("Google Login Error:", error.message);
@@ -81,16 +91,18 @@ export default function Signin() {
 
   const microsoftLogin = async () => {
     try {
-      const provider = new OAuthProvider('microsoft.com');
+      const provider = new OAuthProvider("microsoft.com");
       const result = await signInWithPopup(auth, provider);
       if (result.user) {
         const { email, uid, displayName, photoURL } = result.user;
         const [firstName, lastName] = (displayName || "").split(" ");
 
+        // Store the token for authentication
+        localStorage.setItem("authToken", result.user.accessToken);
+
         // Check if user data exists in Firestore
         const userDoc = await getDoc(doc(db, "user", uid));
         if (!userDoc.exists()) {
-          // If user data doesn't exist, create it
           await setDoc(doc(db, "user", uid), {
             email: email,
             firstName: firstName,
@@ -102,7 +114,7 @@ export default function Signin() {
         toast.success("User logged in successfully", {
           position: "top-center",
         });
-        window.location.href = "/acc_profile";
+        window.location.href = "/acc_profile"; // Redirect to profile page
       }
     } catch (error) {
       console.error("Microsoft Login Error:", error.message);
@@ -267,9 +279,6 @@ export default function Signin() {
                     <a href="#" onClick={microsoftLogin} className="text-gray-600 hover:text-gray-800">
                       <FaMicrosoft className="text-2xl" />
                     </a>
-                    {/* <a href="#" className="text-gray-600 hover:text-gray-800">
-                      <FaApple className="text-2xl" />
-                    </a> */}
                   </div>
                 </div>
               </div>

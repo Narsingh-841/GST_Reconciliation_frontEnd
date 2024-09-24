@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Sidebar from "../components/Sidebar";
+import {Sidebar} from "../components/Sidebar";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import backgroundImage from '../assets/formsimage.jpeg';
 
