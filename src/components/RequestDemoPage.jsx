@@ -72,6 +72,7 @@ const RequestDemoPage = () => {
                   <input
                     type="text"
                     id="name"
+                    placeholder='Enter your name'
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
@@ -85,6 +86,7 @@ const RequestDemoPage = () => {
                     type="email"
                     id="email"
                     name="email"
+                    placeholder='Enter your email'
                     value={formData.email}
                     onChange={handleChange}
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 py-2 px-3"
@@ -97,6 +99,7 @@ const RequestDemoPage = () => {
                     type="text"
                     id="company"
                     name="company"
+                    placeholder='Enter the company name'
                     value={formData.company}
                     onChange={handleChange}
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 py-2 px-3"
@@ -108,6 +111,7 @@ const RequestDemoPage = () => {
                   <textarea
                     id="message"
                     name="message"
+                    placeholder='Enter your valuable time to connect with you'
                     value={formData.message}
                     onChange={handleChange}
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 py-2 px-3"

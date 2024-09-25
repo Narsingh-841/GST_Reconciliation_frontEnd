@@ -24,7 +24,7 @@ const GSTReconciliationPage = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-black">
+    <div className="flex flex-col min-h-screen min-w-screen bg-black">
       
       <Navbar />
       <main className="relative flex-grow pt-24 px-4"> {/* Adjust pt-24 to ensure space below Navbar */}
