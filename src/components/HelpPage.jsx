@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Sidebar } from './Sidebar';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { auth, db } from "../pages/firebase";
+import { collection, addDoc } from 'firebase/firestore'; // Firestore functions
 
 export default function HelpPage() {
   const [to, setTo] = useState('');
@@ -13,15 +15,26 @@ export default function HelpPage() {
   const sendEmail = async (e) => {
     e.preventDefault();
     setIsLoading(true); // Set loading to true when the request starts
+
     try {
+      // Store form details in Firestore
+      await addDoc(collection(db, 'contactRequests'), {
+        to,
+        subject,
+        text,
+        createdAt: new Date(),
+      });
+
+      // Send email request
       await axios.post('https://api-issp7n7t4a-uc.a.run.app/api/send-email', { to, subject, text });
-      toast.success('Request sent successfully!Our team will contact you soon');
+      toast.success('Request sent successfully! Our team will contact you soon.');
+
       // Clear input fields
       setTo('');
       setSubject('');
       setText('');
     } catch (error) {
-      console.error('Error sending email:', error);
+      console.error('Error sending email or saving to Firestore:', error);
       toast.error('An error occurred while sending the request.');
     } finally {
       setIsLoading(false); // Set loading to false after the request completes
@@ -52,7 +65,7 @@ export default function HelpPage() {
             <h3 className="text-xl font-semibold text-gray-800 mb-4">Contact Us</h3>
             <form onSubmit={sendEmail} className="space-y-4 bg-gray-200 p-4 rounded-md">
               <div>
-                <label htmlFor="from" className="block text-sm font-medium text-gray-700">Enter your email</label>
+                <label htmlFor="to" className="block text-sm font-medium text-gray-700">Enter your email</label>
                 <input
                   type="email"
                   id="to"
@@ -71,7 +84,7 @@ export default function HelpPage() {
                   value={subject}
                   onChange={(e) => setSubject(e.target.value)}
                   required
-                  placeholder='Enter the subject '
+                  placeholder='Enter the subject'
                   className="mt-1 block w-full px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500"
                 />
               </div>

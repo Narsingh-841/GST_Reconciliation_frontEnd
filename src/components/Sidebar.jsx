@@ -14,7 +14,6 @@ import { TbHomeMove } from "react-icons/tb";
 export const Sidebar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [user, setUser] = useState(null);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -36,7 +35,7 @@ export const Sidebar = () => {
   }, []);
 
   const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
+    setIsSidebarOpen(prev => !prev); // Use functional state update
   };
 
   const handleLogout = () => {
@@ -59,28 +58,19 @@ export const Sidebar = () => {
 
   return (
     <>
-      {/* Sidebar */}
       <div
         className={`fixed top-0 left-0 h-full transition-transform ease-in-out duration-300 ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-16"
-        } bg-gray-800 text-white shadow-md z-50 ${
-          isSidebarOpen ? "w-49" : "w-16"
-        }`}
+        } bg-gray-800 text-white shadow-md z-50 ${isSidebarOpen ? "w-49" : "w-16"}`}
       >
         <div className="flex flex-col h-full p-6">
           {/* User Profile */}
-          <div
-            className={`flex items-center mb-5 ${
-              isSidebarOpen ? "" : "justify-center"
-            }`}
-          >
+          <div className={`flex items-center mb-5 ${isSidebarOpen ? "" : "justify-center"}`}>
             <Link to="/acc_Profile">
               <img
                 src={user?.photo || "https://via.placeholder.com/150"}
                 alt="Profile"
-                className={`h-9 w-9 rounded-full ${
-                  isSidebarOpen ? "mr-2" : ""
-                }`}
+                className={`h-9 w-9 rounded-full ${isSidebarOpen ? "mr-2" : ""}`}
               />
             </Link>
             {isSidebarOpen && (
@@ -92,55 +82,22 @@ export const Sidebar = () => {
 
           {/* Links */}
           <div className="flex flex-col space-y-2 mb-4">
-            <Link
-              to="/acc_profile"
-              className={`flex items-center p-2 rounded-md transition-colors hover:bg-gray-700 ${isActive(
-                "/acc_profile"
-              )}`}
-            >
-              <LuUserCog className="text-xl" />
-              {isSidebarOpen && <span className="ml-2">Profile</span>}
-            </Link>
-            <Link
-              to="/Gst_Form"
-              className={`flex items-center p-2 rounded-md transition-colors hover:bg-gray-700 ${isActive(
-                "/Gst_Form"
-              )}`}
-            >
-              <FaSquarespace className="text-xl" />
-              {isSidebarOpen && (
-                <span className="ml-2">GST Reconciliation</span>
-              )}
-            </Link>
-            <Link
-              to="/acc_how_to_use"
-              className={`flex items-center p-2 rounded-md transition-colors hover:bg-gray-700 ${isActive(
-                "/acc_how_to_use"
-              )}`}
-            >
-              <HiViewGrid className="text-xl" />
-              {isSidebarOpen && <span className="ml-2">How to use</span>}
-            </Link>
-
-            <Link
-              to="/HelpPage"
-              className={`flex items-center p-2 rounded-md transition-colors hover:bg-gray-700 ${isActive(
-                "/help"
-              )}`}
-            >
-              <BiHelpCircle className="text-xl" />
-              {isSidebarOpen && <span className="ml-2">Help</span>}
-            </Link>
-
-            <Link
-              to="/"
-              className={`flex items-center p-2 rounded-md transition-colors hover:bg-gray-700 ${isActive(
-                "/"
-              )}`}
-            >
-              <TbHomeMove className="text-xl" />
-              {isSidebarOpen && <span className="ml-2">Home</span>}
-            </Link>
+            {[
+              { path: "/acc_profile", label: "Profile", Icon: LuUserCog },
+              { path: "/Gst_Form", label: "GST Reconciliation", Icon: FaSquarespace },
+              { path: "/acc_how_to_use", label: "How to use", Icon: HiViewGrid },
+              { path: "/HelpPage", label: "Help", Icon: BiHelpCircle },
+              { path: "/", label: "Home", Icon: TbHomeMove },
+            ].map(({ path, label, Icon }) => (
+              <Link
+                key={path}
+                to={path}
+                className={`flex items-center p-2 rounded-md transition-colors hover:bg-gray-700 ${isActive(path)}`}
+              >
+                <Icon className="text-xl" />
+                {isSidebarOpen && <span className="ml-2">{label}</span>}
+              </Link>
+            ))}
           </div>
 
           {/* Logout Button */}
@@ -157,19 +114,12 @@ export const Sidebar = () => {
           {/* Sidebar Toggle Button */}
           <div
             className={`absolute top-1/2 -translate-y-1/2 right-0 flex items-center justify-center ${
-              isSidebarOpen
-                ? "bg-white text-gray-800"
-                : "bg-gray-800 text-white"
+              isSidebarOpen ? "bg-white text-gray-800" : "bg-gray-800 text-white"
             } rounded-l-full w-8 h-8`}
           >
-            <button
-              onClick={toggleSidebar}
-              className="w-full h-full flex items-center justify-center"
-            >
+            <button onClick={toggleSidebar} className="w-full h-full flex items-center justify-center">
               <FaRegArrowAltCircleRight
-                className={`transform ${
-                  isSidebarOpen ? "rotate-180" : ""
-                } transition-transform`}
+                className={`transform ${isSidebarOpen ? "rotate-180" : ""} transition-transform`}
                 size={20}
               />
             </button>
@@ -180,10 +130,7 @@ export const Sidebar = () => {
       {/* Sidebar icon to open */}
       {!isSidebarOpen && (
         <div className="fixed top-1/2 -translate-y-1/2 left-0 flex items-center justify-center bg-gray-800 text-white rounded-r-full w-8 h-8 z-50">
-          <button
-            onClick={toggleSidebar}
-            className="w-full h-full flex items-center justify-center"
-          >
+          <button onClick={toggleSidebar} className="w-full h-full flex items-center justify-center">
             <FaArrowAltCircleLeft
               className="transform rotate-180 transition-transform"
               size={20}
