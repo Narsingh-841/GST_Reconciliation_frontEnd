@@ -34,22 +34,21 @@ export default function Contact() {
               <div className="grid grid-cols-1 gap-4">
                 <div className="flex items-center">
                   <FaPhone className="mr-2" />
-                  <p>1300 774 666</p>
+                  <p>+916283289834</p>
                 </div>
                 <div className="flex items-center">
                   <FaMapMarker className="mr-2" />
                   <p>
-                    Flux (Spacecubed), Level 1, 191, St. Georges Terrace, Perth-
-                    Australia.
+                  indiqube, alpha building, Kadubeesanahalli, Panathur, Bengaluru, Karnataka 560103
                   </p>
                 </div>
                 <div className="flex items-center">
                   <FaEnvelope className="mr-2" />
                   <a
-                    href="mailto:topadmin@theoutsourcepro.com.au"
+                    href="mailto:toptechautomation@theoutsourcepro.com.au"
                     className="text-blue-400 hover:underline"
                   >
-                    topadmin@theoutsourcepro.com.au
+                    toptechautomation@theoutsourcepro.com.au
                   </a>
                 </div>
               </div>

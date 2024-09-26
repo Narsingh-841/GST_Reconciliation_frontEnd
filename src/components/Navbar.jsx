@@ -12,10 +12,7 @@ export default function Navbar() {
     setShowMenu(false);
   };
 
-  const handleLogoClick = () => {
-    scroller.scrollToTop();
-    closeMenu();
-  };
+
 
   const handleScrollToAbout = () => {
     navigate('/');
@@ -40,26 +37,26 @@ export default function Navbar() {
   };
 
   const handleSignInClick = () => {
-    const authToken = localStorage.getItem('authToken'); // Use the correct key
+    const authToken = localStorage.getItem('authToken');
     if (authToken) {
-      navigate('/acc_profile'); // Navigate to profile if token exists
+      navigate('/acc_profile');
     } else {
-      navigate('/sign-in'); // Navigate to sign-in otherwise
+      navigate('/sign-in');
     }
     closeMenu();
   };
 
   return (
-    <div className="bg-[#f8f9fa] p-4 md:p-6 transform scale-105 relative z-10">
-      <div className="max-w-[1300px] mx-auto flex justify-between items-center relative z-20">
+    <div className="bg-[#f8f9fa] max-h-[90px] p-4 md:p-4 relative z-20">
+      <div className="max-w-[1300px] mx-auto flex justify-between items-center">
         <div className="flex items-center">
           <img
             src={Image}
             alt="Logo"
             className="h-16 w-auto mr-20 cursor-pointer"
-            onClick={handleLogoClick}
+          
           />
-          <ul className={`md:flex space-x-9 items-center hidden md:flex ml-8`}>
+          <ul className="md:flex space-x-9 items-center hidden ml-8">
             <li>
               <RouterLink to="/">
                 <button className="hover:font-bold">Home</button>
@@ -92,7 +89,7 @@ export default function Navbar() {
           )}
         </div>
 
-        <ul className="md:flex space-x-8 items-center hidden md:flex">
+        <ul className="md:flex space-x-8 items-center hidden">
           <li>
             <button onClick={handleSignInClick} className="border-2 border-gray-400 text-white px-4 py-2 w-32 hover:font-bold rounded-md bg-gray-800">
               Sign In
@@ -100,7 +97,7 @@ export default function Navbar() {
           </li>
           <li>
             <RouterLink to="/sign-up">
-              <button className="bg-gray-800 text-white border-2 border-gray-400 px-4 py-2 w-100 hover:font-bold rounded-md">
+              <button className="bg-gray-800 text-white border-2 border-gray-400 px-4 py-2 hover:font-bold rounded-md">
                 Register Now
               </button>
             </RouterLink>
@@ -109,8 +106,8 @@ export default function Navbar() {
       </div>
 
       {showMenu && (
-        <div className="md:hidden">
-          <ul className="flex flex-col mt-4 px-4">
+        <div className="absolute top-[90px] bg-gray-200 left-0 w-full shadow-md z-30 transition duration-300 ease-in-out">
+          <ul className="flex flex-col px-4 py-4 space-y-4">
             <li>
               <RouterLink to="/">
                 <button onClick={closeMenu} className="hover:font-bold">Home</button>
@@ -133,11 +130,13 @@ export default function Navbar() {
               <button onClick={handleScrollToContact} className="hover:font-bold">Contact Us</button>
             </li>
             <li>
-              <button onClick={handleSignInClick} className="bg-gray-800 text-white border-2 border-gray-400 px-4 py-2 w-100 hover:font-bold rounded">Sign In</button>
+              <button onClick={handleSignInClick} className="bg-gray-800 text-white border-2 border-gray-400 px-4 py-2 hover:font-bold rounded">
+                Sign In
+              </button>
             </li>
             <li>
               <RouterLink to="/sign-up">
-                <button className="bg-gray-800 text-white border-2 border-gray-400 px-4 py-2 w-100 hover:font-bold rounded">Register Now</button>
+                <button className="bg-gray-800 text-white border-2 border-gray-400 px-4 py-2 hover:font-bold rounded">Register Now</button>
               </RouterLink>
             </li>
           </ul>

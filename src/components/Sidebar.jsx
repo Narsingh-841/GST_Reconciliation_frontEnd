@@ -75,7 +75,7 @@ export const Sidebar = () => {
             </Link>
             {isSidebarOpen && (
               <span className="text-sm font-medium">
-                {user ? `${user.firstName} ${user.lastName}` : "Guest"}
+                {user ? `${user.firstName} ${user.lastName}` : " "}
               </span>
             )}
           </div>
