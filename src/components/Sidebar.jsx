@@ -10,6 +10,7 @@ import { AiOutlineLogout } from "react-icons/ai";
 import { BiHelpCircle } from "react-icons/bi";
 import { FaSquarespace } from "react-icons/fa";
 import { TbHomeMove } from "react-icons/tb";
+import { RiUser2Fill } from "react-icons/ri";
 
 export const Sidebar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -87,16 +88,36 @@ export const Sidebar = () => {
               { path: "/Gst_Form", label: "GST Reconciliation", Icon: FaSquarespace },
               { path: "/acc_how_to_use", label: "How to use", Icon: HiViewGrid },
               { path: "/HelpPage", label: "Help", Icon: BiHelpCircle },
+              {
+                path: "/help_guide",
+                label: "User Guide",
+                Icon: RiUser2Fill,
+                isExternal: true, // Mark it as an external link
+              },
               { path: "/", label: "Home", Icon: TbHomeMove },
-            ].map(({ path, label, Icon }) => (
-              <Link
-                key={path}
-                to={path}
-                className={`flex items-center p-2 rounded-md transition-colors hover:bg-gray-700 ${isActive(path)}`}
-              >
-                <Icon className="text-xl" />
-                {isSidebarOpen && <span className="ml-2">{label}</span>}
-              </Link>
+             
+            ].map(({ path, label, Icon, isExternal }) => (
+              isExternal ? (
+                <a
+                  key={path}
+                  href={path}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`flex items-center p-2 rounded-md transition-colors hover:bg-gray-700`}
+                >
+                  <Icon className="text-xl" />
+                  {isSidebarOpen && <span className="ml-2">{label}</span>}
+                </a>
+              ) : (
+                <Link
+                  key={path}
+                  to={path}
+                  className={`flex items-center p-2 rounded-md transition-colors hover:bg-gray-700 ${isActive(path)}`}
+                >
+                  <Icon className="text-xl" />
+                  {isSidebarOpen && <span className="ml-2">{label}</span>}
+                </Link>
+              )
             ))}
           </div>
 

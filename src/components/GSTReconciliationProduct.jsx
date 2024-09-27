@@ -101,7 +101,7 @@ const GSTReconciliationPage = () => {
 
           <section className="text-center mb-12 max-w-4xl mx-auto">
             <h2 className="text-3xl font-semibold mb-4 text-white">Get Started Today</h2>
-            <p className="text-lg text-gray-100 mb-6">
+            <p className="text-lg text-gray-100 mb-5">
               Transform your GST reconciliation process with our automated solution. Contact us for a free demo or to discuss how our system can be tailored to your business needs. Simplify your accounting, enhance accuracy, and ensure compliance with ease.
             </p>
             <div className="flex justify-center gap-4">

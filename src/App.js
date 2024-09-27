@@ -23,6 +23,8 @@ import "react-toastify/dist/ReactToastify.css";
 import RequestDemoPage from "./components/RequestDemoPage";
 import About from "./components/About";
 import PrivateRoute from "./components/PrivateRoute";
+import HelpGuide from "./components/HelpGuide";
+
 
 const isAuthenticated = () => {
   return localStorage.getItem("authToken") !== null;
@@ -76,6 +78,14 @@ function App() {
               element={
                 <PrivateRoute isAuthenticated={isAuthenticated()}>
                   <Gst_form />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/help_guide"
+              element={
+                <PrivateRoute isAuthenticated={isAuthenticated()}>
+                  <HelpGuide />
                 </PrivateRoute>
               }
             />
