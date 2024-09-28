@@ -46,7 +46,8 @@ export const Sidebar = () => {
         .signOut()
         .then(() => {
           console.log("User signed out");
-          localStorage.removeItem("authToken"); // Remove the token from local storage
+          localStorage.removeItem("authToken"); 
+          localStorage.removeItem("popup"); // Remove the token from local storage
           window.location.href = "/";
         })
         .catch((error) => {

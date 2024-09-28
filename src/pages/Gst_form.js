@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import {Sidebar} from "../components/Sidebar";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Sidebar } from "../components/Sidebar";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import backgroundImage from '../assets/formsimage.jpeg';
+import backgroundImage from "../assets/formsimage.jpeg";
+import { useNavigate } from "react-router-dom";
 
 export default function Gst_Form() {
   const [formData, setFormData] = useState({});
@@ -14,24 +15,47 @@ export default function Gst_Form() {
   const [showPassword, setShowPassword] = useState({});
   const [showSecurityAnswers, setShowSecurityAnswers] = useState({});
   const [idErrors, setIdErrors] = useState({});
+  const [showPopup, setShowPopup] = useState(false); // Popup state
+  const navigate = useNavigate();
 
   const xeroFields = [
     { name: "ATO_Id", hint: "Enter Xero username" },
     { name: "Client_Name", hint: "Enter client name" },
     { name: "From", hint: "Start date of the period" },
     { name: "To", hint: "End date of the period" },
-    { name: "July_September_Quarter", hint: "Jul 2022 Sep 2022 Business activity statement" },
-    { name: "October_December_Quarter", hint: "Oct 2022 Dec 2022 Business activity statement" },
-    { name: "January_March_Quarter", hint: "Jan 2023 Mar 2023 Business activity statement" },
-    { name: "April_June_Quarter", hint: "Apr 2023 Jun 2023 Business activity statement" },
+    {
+      name: "July_September_Quarter",
+      hint: "Jul 2022 Sep 2022 Business activity statement",
+    },
+    {
+      name: "October_December_Quarter",
+      hint: "Oct 2022 Dec 2022 Business activity statement",
+    },
+    {
+      name: "January_March_Quarter",
+      hint: "Jan 2023 Mar 2023 Business activity statement",
+    },
+    {
+      name: "April_June_Quarter",
+      hint: "Apr 2023 Jun 2023 Business activity statement",
+    },
     { name: "XERO_Id", hint: "Enter your Xero Id" },
     { name: "XERO_Password", hint: "Enter your password" },
     { name: "Security_Question_1", hint: "First security question" },
-    { name: "Security_Answer_1", hint: "Answer to the first security question" },
+    {
+      name: "Security_Answer_1",
+      hint: "Answer to the first security question",
+    },
     { name: "Security_Question_2", hint: "Second security question" },
-    { name: "Security_Answer_2", hint: "Answer to the second security question" },
+    {
+      name: "Security_Answer_2",
+      hint: "Answer to the second security question",
+    },
     { name: "Security_Question_3", hint: "Third security question" },
-    { name: "Security_Answer_3", hint: "Answer to the third security question" },
+    {
+      name: "Security_Answer_3",
+      hint: "Answer to the third security question",
+    },
     { name: "User_Name", hint: "Username for laptop" },
     { name: "Email_Id", hint: "Recipient of the sender" },
   ];
@@ -48,17 +72,47 @@ export default function Gst_Form() {
     { name: "Myob_Id", hint: "Enter your username" },
     { name: "Myob_Password", hint: "Enter your password" },
     { name: "Security_Question_1", hint: "First security question for Myob" },
-    { name: "Security_Answer_1", hint: "Answer to the first security question" },
+    {
+      name: "Security_Answer_1",
+      hint: "Answer to the first security question",
+    },
     { name: "Security_Question_2", hint: "Second security question for Myob" },
-    { name: "Security_Answer_2", hint: "Answer to the second security question" },
+    {
+      name: "Security_Answer_2",
+      hint: "Answer to the second security question",
+    },
     { name: "Security_Question_3", hint: "Third security question for Myob" },
-    { name: "Security_Answer_3", hint: "Answer to the third security question" },
+    {
+      name: "Security_Answer_3",
+      hint: "Answer to the third security question",
+    },
     { name: "User_Name", hint: "Username for laptop" },
     { name: "Email_Id", hint: "Recipient of the sender" },
   ];
+  useEffect(() => {
+    const isNewUser = !localStorage.getItem("popup");
+    if (isNewUser) {
+      setShowPopup(true);
+      localStorage.setItem("popup", "true");
+    }
+  }, []);
+
+  const handlePopupClose = () => {
+    setShowPopup(false); // Close the popup without redirecting
+  };
+
+  const handleGoToHelp = () => {
+    setShowPopup(false);
+    navigate("/help_guide"); // Redirect to help page
+  };
+  const handleMarqueeClick = () => {
+    navigate("/help_guide"); // Redirect to help page when clicking on marquee
+  };
 
   useEffect(() => {
-    const allFieldsFilled = Object.values(formData).every(value => value !== '');
+    const allFieldsFilled = Object.values(formData).every(
+      (value) => value !== ""
+    );
     const emailValid = validateEmail(formData.Email_Id);
     const idValid = validateIdFields();
 
@@ -70,12 +124,12 @@ export default function Gst_Form() {
 
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
 
     // Clear any ID error when user types
     if (idErrors[name]) {
-      setIdErrors(prev => ({ ...prev, [name]: '' }));
+      setIdErrors((prev) => ({ ...prev, [name]: "" }));
     }
 
     // Hide password and security answer fields when switching inputs
@@ -104,7 +158,7 @@ export default function Gst_Form() {
   };
 
   const validateIdFields = () => {
-    const idFields = ['ATO_Id', 'XERO_Id', 'Myob_Id', 'Email_Id'];
+    const idFields = ["ATO_Id", "XERO_Id", "Myob_Id", "Email_Id"];
     let isValid = true;
     const newIdErrors = {};
 
@@ -130,36 +184,39 @@ export default function Gst_Form() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(' https://api-issp7n7t4a-uc.a.run.app/api/runJenkinsJob', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          formData,
-          formType: selectedForm,
-        }),
-      });
+      const response = await fetch(
+        " https://api-issp7n7t4a-uc.a.run.app/api/runJenkinsJob",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            formData,
+            formType: selectedForm,
+          }),
+        }
+      );
 
       if (response.ok) {
         const responseText = await response.text();
         toast.dismiss();
         toast.success(responseText);
-        setSubmissionStatus('Submission successful');
+        setSubmissionStatus("Submission successful");
 
         setTimeout(() => {
-          toast.info('A verification email has been sent to you.');
+          toast.info("A verification email has been sent to you.");
         }, 60000);
       } else {
         const errorText = await response.text();
         toast.dismiss();
         toast.error(`Failed to trigger job: ${errorText}`);
-        setSubmissionStatus('Submission failed');
+        setSubmissionStatus("Submission failed");
       }
     } catch (error) {
       toast.dismiss();
       toast.error(`Error occurred: ${error.message}`);
-      setSubmissionStatus('Submission error');
+      setSubmissionStatus("Submission error");
     } finally {
       setIsLoading(false);
     }
@@ -179,45 +236,61 @@ export default function Gst_Form() {
 
   const formatFieldName = (fieldName) => {
     return fieldName
-      .replace(/_/g, ' ')
-      .replace(/\b\w/g, char => char.toUpperCase());
+      .replace(/_/g, " ")
+      .replace(/\b\w/g, (char) => char.toUpperCase());
   };
 
   const handlePasswordVisibility = (fieldName) => {
-    setShowPassword(prevState => ({
+    setShowPassword((prevState) => ({
       ...prevState,
-      [fieldName]: !prevState[fieldName]
+      [fieldName]: !prevState[fieldName],
     }));
   };
 
   const handleSecurityAnswerVisibility = (fieldName) => {
-    setShowSecurityAnswers(prevState => ({
+    setShowSecurityAnswers((prevState) => ({
       ...prevState,
-      [fieldName]: !prevState[fieldName]
+      [fieldName]: !prevState[fieldName],
     }));
   };
 
   const backgroundStyle = {
     backgroundImage: `url(${backgroundImage})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
+    backgroundSize: "cover",
+    backgroundPosition: "center",
   };
-  
+
   const formStyle = {
-    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    backgroundColor: "rgba(255, 255, 255, 0.95)",
   };
 
   const labelStyle = {
-    fontWeight: 'bold',
+    fontWeight: "bold",
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-white" style={backgroundStyle}>
+    <div
+      className="flex flex-col min-h-screen bg-white"
+      style={backgroundStyle}
+    >
+      <div className=" py-2">
+        <marquee className="text-black-600  font-semibold">
+        If you're unsure how to fill out the form,{" "}
+          <a
+            className="text-blue-200 cursor-pointer font-semibold underline"
+            onClick={handleMarqueeClick}
+          >
+            click here
+          </a>
+        </marquee>
+      </div>
       <Sidebar />
       <div className="flex-grow flex items-center justify-center px-4 py-8">
-        <div className="w-full max-w-4xl bg-gray-400 p-8 shadow-lg rounded-lg" style={formStyle}>
+        <div className="w-full max-w-4xl bg-white p-8 " style={formStyle}>
           <h1 className="text-2xl font-bold text-center mb-6">
-            {selectedForm === "xero" ? "Xero GST Reconciliation Form" : "MYOB GST Reconciliation Form"}
+            {selectedForm === "xero"
+              ? "Xero GST Reconciliation Form"
+              : "MYOB GST Reconciliation Form"}
           </h1>
 
           <div className="flex justify-center mb-6">
@@ -234,7 +307,10 @@ export default function Gst_Form() {
                 }}
                 className="mr-2 text-black"
               />
-              <label htmlFor="xero" className="text-black"> Xero</label>
+              <label htmlFor="xero" className="text-black">
+                {" "}
+                Xero
+              </label>
             </div>
             <div className="flex items-center mx-4" style={labelStyle}>
               <input
@@ -249,7 +325,9 @@ export default function Gst_Form() {
                 }}
                 className="mr-2"
               />
-              <label htmlFor="myob" className="text-black">MYOB</label>
+              <label htmlFor="myob" className="text-black">
+                MYOB
+              </label>
             </div>
           </div>
 
@@ -257,14 +335,17 @@ export default function Gst_Form() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {getFields().map((fieldObj, index) => (
                 <div key={index} className="flex flex-col relative">
-                  <label className="block text-sm font-full text-black mb-1" style={labelStyle}>
+                  <label
+                    className="block text-sm font-full text-black mb-1"
+                    style={labelStyle}
+                  >
                     {formatFieldName(fieldObj.name)}
                   </label>
                   {fieldObj.name === "From" || fieldObj.name === "To" ? (
                     <input
                       type="date"
                       name={fieldObj.name}
-                      value={formData[fieldObj.name] || ''}
+                      value={formData[fieldObj.name] || ""}
                       onChange={handleChange}
                       placeholder={fieldObj.hint}
                       className="p-2 block w-full border border-gray-400 rounded-md"
@@ -275,7 +356,7 @@ export default function Gst_Form() {
                       <input
                         type={showPassword[fieldObj.name] ? "text" : "password"}
                         name={fieldObj.name}
-                        value={formData[fieldObj.name] || ''}
+                        value={formData[fieldObj.name] || ""}
                         onChange={handleChange}
                         placeholder={fieldObj.hint}
                         className="p-2 block w-full border border-gray-400 rounded-md"
@@ -283,8 +364,12 @@ export default function Gst_Form() {
                       />
                       <button
                         type="button"
-                        onMouseEnter={() => handlePasswordVisibility(fieldObj.name)}
-                        onMouseLeave={() => handlePasswordVisibility(fieldObj.name)}
+                        onMouseEnter={() =>
+                          handlePasswordVisibility(fieldObj.name)
+                        }
+                        onMouseLeave={() =>
+                          handlePasswordVisibility(fieldObj.name)
+                        }
                         className="absolute inset-y-0 right-0 px-3 flex items-center"
                       >
                         {showPassword[fieldObj.name] ? (
@@ -294,12 +379,18 @@ export default function Gst_Form() {
                         )}
                       </button>
                     </div>
-                  ) : fieldObj.name.toLowerCase().includes("security_answer") ? (
+                  ) : fieldObj.name
+                      .toLowerCase()
+                      .includes("security_answer") ? (
                     <div className="relative">
                       <input
-                        type={showSecurityAnswers[fieldObj.name] ? "text" : "password"}
+                        type={
+                          showSecurityAnswers[fieldObj.name]
+                            ? "text"
+                            : "password"
+                        }
                         name={fieldObj.name}
-                        value={formData[fieldObj.name] || ''}
+                        value={formData[fieldObj.name] || ""}
                         onChange={handleChange}
                         placeholder={fieldObj.hint}
                         className="p-2 block w-full border border-gray-400 rounded-md"
@@ -307,8 +398,12 @@ export default function Gst_Form() {
                       />
                       <button
                         type="button"
-                        onMouseEnter={() => handleSecurityAnswerVisibility(fieldObj.name)}
-                        onMouseLeave={() => handleSecurityAnswerVisibility(fieldObj.name)}
+                        onMouseEnter={() =>
+                          handleSecurityAnswerVisibility(fieldObj.name)
+                        }
+                        onMouseLeave={() =>
+                          handleSecurityAnswerVisibility(fieldObj.name)
+                        }
                         className="absolute inset-y-0 right-0 px-3 flex items-center"
                       >
                         {showSecurityAnswers[fieldObj.name] ? (
@@ -323,14 +418,16 @@ export default function Gst_Form() {
                       <input
                         type="text"
                         name={fieldObj.name}
-                        value={formData[fieldObj.name] || ''}
+                        value={formData[fieldObj.name] || ""}
                         onChange={handleChange}
                         placeholder={fieldObj.hint}
                         className="p-2 block w-full border border-gray-400 rounded-md"
                         required
                       />
                       {idErrors[fieldObj.name] && (
-                        <span className="text-red-500 text-sm mt-1">{idErrors[fieldObj.name]}</span>
+                        <span className="text-red-500 text-sm mt-1">
+                          {idErrors[fieldObj.name]}
+                        </span>
                       )}
                     </div>
                   )}
@@ -341,7 +438,11 @@ export default function Gst_Form() {
             <div className="flex justify-between">
               <button
                 type="submit"
-                className={`py-2 px-4 ${isFormValid ? "bg-blue-500 text-white" : "bg-blue-200 text-gray-600"} rounded`}
+                className={`py-2 px-4 ${
+                  isFormValid
+                    ? "bg-blue-500 text-white"
+                    : "bg-blue-200 text-gray-600"
+                } rounded`}
                 disabled={!isFormValid || isLoading}
               >
                 {isLoading ? "Submitting..." : "Submit"}
@@ -363,6 +464,34 @@ export default function Gst_Form() {
           )}
         </div>
       </div>
+      {showPopup && (
+        <div className="fixed inset-0 bg-gray-800 bg-opacity-30 flex justify-center items-center">
+          <div className="bg-black p-6 rounded-md shadow-md w-1/3">
+            <h2 className="text-xl text-white font-semibold mb-4">
+              Need Help?
+            </h2>
+            <p className="mb-4 text-white">
+              It looks like you're new here. Would you like to visit the help
+              guide?
+            </p>
+            <div className="flex justify-end space-x-4">
+              <button
+                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
+                onClick={handleGoToHelp}
+              >
+                Help guide
+              </button>
+              <button
+                className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-700"
+                onClick={handlePopupClose}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <ToastContainer />
     </div>
   );
