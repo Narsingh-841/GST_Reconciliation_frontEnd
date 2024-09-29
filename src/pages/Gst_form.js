@@ -17,9 +17,10 @@ export default function Gst_Form() {
   const [idErrors, setIdErrors] = useState({});
   const [showPopup, setShowPopup] = useState(false); // Popup state
   const navigate = useNavigate();
+  
 
   const xeroFields = [
-    { name: "ATO_Id", hint: "Enter Xero username" },
+    { name: "ATO_Id", hint: "Enter ATO Email Id" },
     { name: "Client_Name", hint: "Enter client name" },
     { name: "From", hint: "Start date of the period" },
     { name: "To", hint: "End date of the period" },
@@ -39,24 +40,24 @@ export default function Gst_Form() {
       name: "April_June_Quarter",
       hint: "Apr 2023 Jun 2023 Business activity statement",
     },
-    { name: "XERO_Id", hint: "Enter your Xero Id" },
+    { name: "XERO_Id", hint: "Enter your Xero Email Id" },
     { name: "XERO_Password", hint: "Enter your password" },
-    { name: "Security_Question_1", hint: "First security question" },
+    // { name: "Security_Question_1", hint: "First security question" },
     {
       name: "Security_Answer_1",
-      hint: "Answer to the first security question",
+      hint: "What is your dream job?",
     },
-    { name: "Security_Question_2", hint: "Second security question" },
+    // { name: "Security_Question_2", hint: "Second security question" },
     {
       name: "Security_Answer_2",
-      hint: "Answer to the second security question",
+      hint: "What is your dream car?",
     },
-    { name: "Security_Question_3", hint: "Third security question" },
+    // { name: "Security_Question_3", hint: "Third security question" },
     {
       name: "Security_Answer_3",
-      hint: "Answer to the third security question",
+      hint: "What was the name of your first pet?",
     },
-    { name: "User_Name", hint: "Username for laptop" },
+    { name: "User_Name", hint: "Enter your name" },
     { name: "Email_Id", hint: "Recipient of the sender" },
   ];
 
@@ -465,32 +466,31 @@ export default function Gst_Form() {
         </div>
       </div>
       {showPopup && (
-        <div className="fixed inset-0 bg-gray-800 bg-opacity-30 flex justify-center items-center">
-          <div className="bg-black p-6 rounded-md shadow-md w-1/3">
-            <h2 className="text-xl text-white font-semibold mb-4">
-              Need Help?
-            </h2>
-            <p className="mb-4 text-white">
-              It looks like you're new here. Would you like to visit the help
-              guide?
-            </p>
-            <div className="flex justify-end space-x-4">
-              <button
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
-                onClick={handleGoToHelp}
-              >
-                Help guide
-              </button>
-              <button
-                className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-700"
-                onClick={handlePopupClose}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+  <div className="fixed inset-0 bg-gray-800 bg-opacity-30 flex justify-center items-center">
+    <div className="bg-black p-4 sm:p-6 rounded-md shadow-md w-full max-w-xs sm:max-w-md">
+      <h2 className="text-lg sm:text-xl text-white font-semibold mb-3 sm:mb-4">
+        Need Help?
+      </h2>
+      <p className="mb-3 sm:mb-4 text-white text-sm sm:text-base">
+        It looks like you're new here. Would you like to visit the help guide?
+      </p>
+      <div className="flex justify-end space-x-2 sm:space-x-4">
+        <button
+          className="bg-blue-500 text-white px-3 sm:px-4 py-1 sm:py-2 rounded hover:bg-blue-700"
+          onClick={handleGoToHelp}
+        >
+          Help guide
+        </button>
+        <button
+          className="bg-gray-500 text-white px-3 sm:px-4 py-1 sm:py-2 rounded hover:bg-gray-700"
+          onClick={handlePopupClose}
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+)}
 
       <ToastContainer />
     </div>
