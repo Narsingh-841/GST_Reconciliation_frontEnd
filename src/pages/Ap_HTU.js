@@ -1,6 +1,6 @@
 import React from "react";
 import {Sidebar} from "../components/Sidebar";
-import Video from "../assets/HTU.mp4"; // Adjust the path as needed
+import Video from "../assets/HTUV.mp4"; // Adjust the path as needed
 
 export default function Ap_HTU() {
   return (

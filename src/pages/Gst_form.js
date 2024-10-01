@@ -42,17 +42,17 @@ export default function Gst_Form() {
     },
     { name: "XERO_Id", hint: "Enter your Xero Email Id" },
     { name: "XERO_Password", hint: "Enter your password" },
-    // { name: "Security_Question_1", hint: "First security question" },
+    { name: "Security_Question_1", hint: "First security question" },
     {
       name: "Security_Answer_1",
       hint: "What is your dream job?",
     },
-    // { name: "Security_Question_2", hint: "Second security question" },
+    { name: "Security_Question_2", hint: "Second security question" },
     {
       name: "Security_Answer_2",
       hint: "What is your dream car?",
     },
-    // { name: "Security_Question_3", hint: "Third security question" },
+    { name: "Security_Question_3", hint: "Third security question" },
     {
       name: "Security_Answer_3",
       hint: "What was the name of your first pet?",

@@ -10,9 +10,9 @@ import Homepage from "./pages/Homepage";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import Ap_HTU from "./pages/Ap_HTU";
-import Ap_Buy from "./pages/Ap_Buy";
+// import Ap_Buy from "./pages/Ap_Buy";
 import Ap_Profile from "./pages/Ap_Profile";
-import Ap_Redeem from "./pages/Ap_Redeem";
+// import Ap_Redeem from "./pages/Ap_Redeem";
 import Gst_form from "./pages/Gst_form";
 import Pricing from "./components/Pricing";
 import Heading from "./components/Heading";
@@ -49,14 +49,14 @@ function App() {
                 </PrivateRoute>
               }
             />
-            <Route
+            {/* <Route
               path="/acc_buy"
               element={
                 <PrivateRoute isAuthenticated={isAuthenticated()}>
                   <Ap_Buy />
                 </PrivateRoute>
               }
-            />
+            /> */}
             <Route
               path="/acc_profile"
               element={
@@ -65,14 +65,14 @@ function App() {
                 </PrivateRoute>
               }
             />
-            <Route
+            {/* <Route
               path="/acc_redeem"
               element={
                 <PrivateRoute isAuthenticated={isAuthenticated()}>
                   <Ap_Redeem />
                 </PrivateRoute>
               }
-            />
+            /> */}
             <Route
               path="/gst_form"
               element={

@@ -167,6 +167,8 @@ export default function Signup() {
         const { email, uid, displayName, photoURL } = result.user;
         const [firstName, lastName] = (displayName || "").split(" ");
 
+        // Store the token for authentication
+        localStorage.setItem("authToken", result.user.accessToken);
         // Check if user data already exists in Firestore
         const userDoc = await getDoc(doc(db, "user", uid));
         if (!userDoc.exists()) {
