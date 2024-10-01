@@ -75,17 +75,28 @@ export default function Signup() {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-
+  
+    const emailDomain = email.split('@')[1];
+  
+    // Check if email domain matches
+    if (emailDomain !== "theoutsourcepro.com.au") {
+      toast.error("Only @theoutsourcepro.com.au emails are allowed", {
+        position: "bottom-center",
+      });
+      return;
+    }
+  
+    // Rest of the signup logic
     if (!/^\d{10}$/.test(mobile)) {
       toast.error("Mobile number must be exactly 10 digits.", {
         position: "bottom-center",
       });
       return;
     }
-
+  
     const usersRef = collection(db, "user");
     const mobileQuery = query(usersRef, where("mobile", "==", mobile));
-
+  
     try {
       const mobileSnapshot = await getDocs(mobileQuery);
       if (!mobileSnapshot.empty) {
@@ -94,18 +105,16 @@ export default function Signup() {
         });
         return;
       }
-
+  
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-
+  
       if (user) {
         const token = await user.getIdToken();
         localStorage.setItem("authToken", token);
-        // Check if user data already exists in Firestore
         const userDoc = await getDoc(doc(db, "user", user.uid));
-
+  
         if (!userDoc.exists()) {
-          // Only set document if it does not exist
           await setDoc(doc(db, "user", user.uid), {
             email: user.email,
             firstName: firstName,
@@ -114,7 +123,6 @@ export default function Signup() {
             photo: user.photoURL,
           });
         }
-        console.log("User registered successfully");
         toast.success("User registered successfully", {
           position: "top-center",
         });
@@ -127,7 +135,7 @@ export default function Signup() {
       });
     }
   };
-
+  
   const googleLogin = async () => {
     try {
       const provider = new GoogleAuthProvider();
@@ -340,12 +348,13 @@ export default function Signup() {
                 <span className="text-gray-600">or</span>
               </div>
               <div className="flex justify-center items-center mt-5 space-x-4">
-                <a href="#" onClick={googleLogin}>
+                {/* <a href="#" onClick={googleLogin}>
                   <FaGoogle className="text-2xl text-gray-600 hover:text-gray-800" />
-                </a>
+                </a> */}
                 <a href="#" onClick={microsoftLogin} className="text-gray-600 hover:text-gray-800">
                   <FaMicrosoft className="text-2xl" />
                 </a>
+                <p className="text-gray-600">Login with Microsoft</p>
               </div>
             </form>
           </div>

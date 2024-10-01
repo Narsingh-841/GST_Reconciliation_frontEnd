@@ -70,11 +70,11 @@ export default function Navbar() {
                 <button className="hover:font-bold">Product</button>
               </RouterLink>
             </li>
-            <li>
+            {/* <li>
               <RouterLink to="/pricing">
                 <button className="hover:font-bold">Pricing</button>
               </RouterLink>
-            </li>
+            </li> */}
             <li>
               <button onClick={handleScrollToContact} className="hover:font-bold">Contact Us</button>
             </li>

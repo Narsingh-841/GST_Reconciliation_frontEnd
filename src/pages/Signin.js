@@ -273,12 +273,13 @@ export default function Signin() {
                 </div>
                 <div className="flex justify-center items-center mt-5">
                   <div className="flex space-x-4">
-                    <a href="#" onClick={googleLogin} className="text-gray-600 hover:text-gray-800">
+                    {/* <a href="#" onClick={googleLogin} className="text-gray-600 hover:text-gray-800">
                       <FaGoogle className="text-2xl" />
-                    </a>
+                    </a> */}
                     <a href="#" onClick={microsoftLogin} className="text-gray-600 hover:text-gray-800">
                       <FaMicrosoft className="text-2xl" />
                     </a>
+                    <p className="text-gray-600">Login with Microsoft</p>
                   </div>
                 </div>
               </div>

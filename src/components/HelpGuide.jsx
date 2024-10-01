@@ -146,10 +146,26 @@ const HelpGuide = () => {
                   follows:
                 </p>
                 <ol className="list-decimal list-inside space-y-2">
-                  <li>
-                    <strong className="text-blue">Note:</strong> Ensure the
-                    details match those in your ATO and Xero accounts.
-                  </li>
+                  <ul>
+                    <li>
+                      <strong style={{ color: 'red' }}>Note:</strong> Make sure the details match your
+                      ATO and Xero accounts.
+                    </li>
+                    <li>
+                      <strong style={{ color: 'red' }}>Note:</strong> Set up security questions in Xero
+                      and remember the questions and answers before filling out the form.
+                    </li>
+                    <li>
+                      <strong style={{ color: 'red' }}>Note:</strong> Enter the full client name as it
+                      appears in Xero.
+                    </li>
+                    <li>
+                      <strong style={{ color: 'red' }}>Note:</strong> Ensure the client has all the
+                      necessary details for GST reconciliation in both ATO and
+                      Xero.
+                    </li>
+                  </ul>
+
                   <li>Complete all required fields.</li>
                 </ol>
                 <div className="overflow-x-auto">
@@ -221,8 +237,8 @@ const HelpGuide = () => {
                         },
                         {
                           name: "Security Question 1",
-                          description: "What is your dream job?",
-                          example: "Enter your dream job",
+                          description: "Enter the security question which you have configured in Xero",
+                          example: "What is your dream job?",
                         },
                         {
                           name: "Security Answer 1",
@@ -231,8 +247,8 @@ const HelpGuide = () => {
                         },
                         {
                           name: "Security Question 2",
-                          description: "What is your first pet's name?",
-                          example: "First pet's name",
+                          description: "Enter the security question which you have configured in Xero",
+                          example: "What is your first pet's name?",
                         },
                         {
                           name: "Security Answer 2",
@@ -272,17 +288,24 @@ const HelpGuide = () => {
             content: (
               <>
                 <p className="mb-2">
-                  After completing the process, the user will
+                  After completing the process Submit, the user will
                 </p>
                 <ol className="list-decimal list-inside space-y-2">
                   <li>
-                    Receive a screenshot of the ATO login code in their email.
+                    Receive a screenshot of the ATO login code in their email with in a minute.
                   </li>
+                  <ol>
+
                   <li>
-                    Verify the ATO code in your ATO MY Gov mobile Application.
+                      <strong style={{ color: 'red' }}>Note:</strong> You Should verify the ATO code with in 30s.
+                    </li>
+                  </ol>
+                  <li>
+                   Please verify the ATO code in your ATO MY Gov mobile Application as soon as you receive code in your email.
                   </li>
+
                   <li>
-                    After 5 minutes, a BAS sheet will be generated and sent to
+                    After 6-7 minutes, a BAS sheet will be generated and sent to
                     the user's email with the reconciled GST details.
                   </li>
                 </ol>
@@ -300,7 +323,7 @@ const HelpGuide = () => {
                 <ol className="list-decimal list-inside space-y-2">
                   <li>Check your internet connection.</li>
                   <li>Ensure your login credentials are correct.</li>
-                  <li>Review any error messages for guidance.</li>
+                  <li>Review any Job failed messages in your email for guidance.</li>
                 </ol>
               </>
             ),
