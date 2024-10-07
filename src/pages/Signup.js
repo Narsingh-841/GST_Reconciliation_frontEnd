@@ -351,10 +351,10 @@ export default function Signup() {
                 {/* <a href="#" onClick={googleLogin}>
                   <FaGoogle className="text-2xl text-gray-600 hover:text-gray-800" />
                 </a> */}
-                <a href="#" onClick={microsoftLogin} className="text-gray-600 hover:text-gray-800">
-                  <FaMicrosoft className="text-2xl" />
-                </a>
-                <p className="text-gray-600">Login with Microsoft</p>
+               <a href="#" onClick={microsoftLogin} className="flex items-center text-gray-600 hover:text-gray-800 space-x-2">
+    <FaMicrosoft className="text-2xl" />
+    <span className="text-gray-600">Login with Microsoft</span>
+  </a>
               </div>
             </form>
           </div>

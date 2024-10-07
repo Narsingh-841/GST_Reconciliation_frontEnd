@@ -6,6 +6,8 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import backgroundImage from "../assets/formsimage.jpeg";
 import { useNavigate } from "react-router-dom";
 
+
+
 export default function Gst_Form() {
   const [formData, setFormData] = useState({});
   const [submissionStatus, setSubmissionStatus] = useState("");
@@ -17,6 +19,7 @@ export default function Gst_Form() {
   const [idErrors, setIdErrors] = useState({});
   const [showPopup, setShowPopup] = useState(false); // Popup state
   const navigate = useNavigate();
+  const [showMyobPopup, setShowMyobPopup] = useState(false); // MYOB popup state
   
 
   const xeroFields = [
@@ -102,6 +105,21 @@ export default function Gst_Form() {
     setShowPopup(false); // Close the popup without redirecting
   };
 
+
+  const handleFormTypeChange = (formType) => {
+    if (formType === "myob") {
+      setShowMyobPopup(true); // Show MYOB pending popup
+    } else {
+      setSelectedForm(formType); // Set the selected form
+      handleReset();
+    }
+  };
+  
+  const handleMyobPopupClose = () => {
+    setShowMyobPopup(false); // Close the MYOB popup
+    setSelectedForm("xero"); // Reset form to Xero
+  };
+  
   const handleGoToHelp = () => {
     setShowPopup(false);
     navigate("/help_guide"); // Redirect to help page
@@ -321,9 +339,9 @@ export default function Gst_Form() {
                 value="myob"
                 checked={selectedForm === "myob"}
                 onChange={() => {
-                  setSelectedForm("myob");
-                  handleReset();
-                }}
+                  handleFormTypeChange("myob")}
+                  // handleReset();
+                }
                 className="mr-2"
               />
               <label htmlFor="myob" className="text-black">
@@ -491,6 +509,26 @@ export default function Gst_Form() {
     </div>
   </div>
 )}
+{showMyobPopup && (
+  <div className="fixed inset-0 bg-black bg-opacity-90 flex justify-center items-center">
+    <div className="bg-black p-4 sm:p-6 rounded-md shadow-md w-full max-w-xs sm:max-w-md">
+      <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-white">Feature Pending</h2>
+      <p className="mb-3 sm:mb-4 text-sm sm:text-base text-white">
+        MYOB form integration is pending and will be added in a future version.
+      </p>
+      <div className="flex justify-end space-x-2 sm:space-x-4">
+        <button
+          className="bg-blue-500 text-white px-3 sm:px-4 py-1 sm:py-2 rounded hover:bg-blue-700"
+          onClick={handleMyobPopupClose}
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
+
 
       <ToastContainer />
     </div>

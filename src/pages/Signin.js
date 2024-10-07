@@ -25,7 +25,11 @@ export default function Signin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const user = userCredential.user;
 
       // Store the token for authentication
@@ -134,9 +138,12 @@ export default function Signin() {
       setIsResettingPassword(false);
     } catch (error) {
       console.error("Password Reset Error:", error.message);
-      toast.error("Failed to send password reset email. Please check the email address and try again.", {
-        position: "bottom-center",
-      });
+      toast.error(
+        "Failed to send password reset email. Please check the email address and try again.",
+        {
+          position: "bottom-center",
+        }
+      );
     }
   };
 
@@ -148,10 +155,15 @@ export default function Signin() {
           <div className="w-full max-w-md bg-gray-300 rounded-lg shadow-lg p-5">
             {isResettingPassword ? (
               <div>
-                <h1 className="text-2xl font-bold mb-4 text-center">Reset Password</h1>
+                <h1 className="text-2xl font-bold mb-4 text-center">
+                  Reset Password
+                </h1>
                 <form className="space-y-4" onSubmit={handlePasswordReset}>
                   <div>
-                    <label htmlFor="reset-email" className="block text-sm font-medium text-gray-700">
+                    <label
+                      htmlFor="reset-email"
+                      className="block text-sm font-medium text-gray-700"
+                    >
                       Email
                     </label>
                     <input
@@ -191,7 +203,10 @@ export default function Signin() {
                 <h1 className="text-2xl font-bold mb-4 text-center">Sign In</h1>
                 <form className="space-y-4" onSubmit={handleSubmit}>
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-medium text-gray-700"
+                    >
                       Email
                     </label>
                     <input
@@ -206,7 +221,10 @@ export default function Signin() {
                     />
                   </div>
                   <div className="relative">
-                    <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                    <label
+                      htmlFor="password"
+                      className="block text-sm font-medium text-gray-700"
+                    >
                       Password
                     </label>
                     <input
@@ -239,7 +257,10 @@ export default function Signin() {
                         type="checkbox"
                         className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                       />
-                      <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
+                      <label
+                        htmlFor="remember-me"
+                        className="ml-2 block text-sm text-gray-900"
+                      >
                         Remember me
                       </label>
                     </div>
@@ -262,7 +283,10 @@ export default function Signin() {
                   <div className="mt-4 text-center">
                     <p className="text-gray-600">
                       Don't have an account?{" "}
-                      <Link to="/sign-up" className="text-indigo-600 hover:text-indigo-500">
+                      <Link
+                        to="/sign-up"
+                        className="text-indigo-600 hover:text-indigo-500"
+                      >
                         Sign Up
                       </Link>
                     </p>
@@ -276,10 +300,16 @@ export default function Signin() {
                     {/* <a href="#" onClick={googleLogin} className="text-gray-600 hover:text-gray-800">
                       <FaGoogle className="text-2xl" />
                     </a> */}
-                    <a href="#" onClick={microsoftLogin} className="text-gray-600 hover:text-gray-800">
+                    <a
+                      href="#"
+                      onClick={microsoftLogin}
+                      className="flex items-center text-gray-600 hover:text-gray-800 space-x-2"
+                    >
                       <FaMicrosoft className="text-2xl" />
+                      <span className="text-gray-600">
+                        Login with Microsoft
+                      </span>
                     </a>
-                    <p className="text-gray-600">Login with Microsoft</p>
                   </div>
                 </div>
               </div>

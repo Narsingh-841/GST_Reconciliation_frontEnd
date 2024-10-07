@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from "react";
-import {Sidebar} from "../components/Sidebar";
+import { Sidebar } from "../components/Sidebar";
 import { auth, db, storage } from "../pages/firebase";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { onAuthStateChanged } from "firebase/auth";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 export default function Ap_Profile() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editable, setEditable] = useState(false);
   const [profileData, setProfileData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    mobile: '',
-    photo: ''
+    firstName: "",
+    lastName: "",
+    email: "",
+    mobile: "",
+    photo: "",
   });
   const [image, setImage] = useState(null);
   const [uploadingImage, setUploadingImage] = useState(false);
@@ -29,11 +29,11 @@ export default function Ap_Profile() {
       } else {
         setUser(null);
         setProfileData({
-          firstName: '',
-          lastName: '',
-          email: '',
-          mobile: '',
-          photo: ''
+          firstName: "",
+          lastName: "",
+          email: "",
+          mobile: "",
+          photo: "",
         });
       }
       setLoading(false);
@@ -77,10 +77,14 @@ export default function Ap_Profile() {
       await uploadBytes(imageRef, image);
       const imageUrl = await getDownloadURL(imageRef);
 
-      await setDoc(doc(db, "user", user.uid), {
-        ...profileData,
-        photo: imageUrl
-      }, { merge: true });
+      await setDoc(
+        doc(db, "user", user.uid),
+        {
+          ...profileData,
+          photo: imageUrl,
+        },
+        { merge: true }
+      );
 
       setProfileData((prevData) => ({
         ...prevData,
@@ -124,9 +128,27 @@ export default function Ap_Profile() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <svg className="w-12 h-12 text-gray-500 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" strokeLinecap="round" className="opacity-25" />
-          <path d="M4 12a8 8 0 0116 0 8 8 0 01-16 0" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+        <svg
+          className="w-12 h-12 text-gray-500 animate-spin"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            strokeWidth="4"
+            strokeLinecap="round"
+            className="opacity-25"
+          />
+          <path
+            d="M4 12a8 8 0 0116 0 8 8 0 01-16 0"
+            stroke="currentColor"
+            strokeWidth="4"
+            strokeLinecap="round"
+          />
         </svg>
       </div>
     );
@@ -140,10 +162,21 @@ export default function Ap_Profile() {
         <div className="flex items-center mb-6">
           <div className="w-24 h-24 border border-gray-300 bg-gray-200 flex items-center justify-center rounded-full overflow-hidden">
             {profileData.photo ? (
-              <img src={profileData.photo} alt="User" className="w-full h-full object-cover" />
+              <img
+                src={profileData.photo}
+                alt="User"
+                className="w-full h-full object-cover"
+              />
             ) : (
-              <svg className="w-12 h-12 text-gray-500" fill="currentColor" viewBox="0 0 24 24">
-                <path fillRule="evenodd" d="M12 12c2.209 0 4-1.791 4-4s-1.791-4-4-4-4 1.791-4 4 1.791 4 4 4zm0 2c-2.673 0-8 1.337-8 4v2h16v-2c0-2.663-5.327-4-8-4z" />
+              <svg
+                className="w-12 h-12 text-gray-500"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M12 12c2.209 0 4-1.791 4-4s-1.791-4-4-4-4 1.791-4 4 1.791 4 4 4zm0 2c-2.673 0-8 1.337-8 4v2h16v-2c0-2.663-5.327-4-8-4z"
+                />
               </svg>
             )}
           </div>
@@ -154,15 +187,23 @@ export default function Ap_Profile() {
             <input
               type="file"
               onChange={handleImageChange}
-              className={`mb-2 px-2 py-1 border border-gray-300 rounded bg-gray-100 ${editable ? '' : 'hidden'}`}
+              className={`mb-2 px-2 py-1 border border-gray-300 rounded bg-gray-100 ${
+                editable ? "" : "hidden"
+              }`}
             />
             <button
               type="button"
               onClick={handleImageUpdate}
               disabled={uploadingImage || !editable}
-              className={`text-red-500 px-4 py-2 rounded border ${uploadingImage ? 'bg-gray-300' : 'border-red-500 hover:bg-red-500 hover:text-white'} transition-colors duration-300 ${!editable ? 'opacity-50 cursor-not-allowed' : ''}`}
+              className={`text-red-500 px-4 py-2 rounded border ${
+                uploadingImage
+                  ? "bg-gray-300"
+                  : "border-red-500 hover:bg-red-500 hover:text-white"
+              } transition-colors duration-300 ${
+                !editable ? "opacity-50 cursor-not-allowed" : ""
+              }`}
             >
-              {uploadingImage ? 'Updating...' : 'Update Image'}
+              {uploadingImage ? "Updating..." : "Update Image"}
             </button>
           </div>
         </div>
@@ -172,8 +213,14 @@ export default function Ap_Profile() {
             <input
               type="text"
               name="fullName"
-              value={`${profileData.firstName || ""} ${profileData.lastName || ""}`}
-              className={`w-full px-4 py-2 border rounded-md transition-all duration-300 bg-gray-100 ${editable ? 'border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200' : 'border-gray-300'}`}
+              value={`${profileData.firstName || ""} ${
+                profileData.lastName || ""
+              }`}
+              className={`w-full px-4 py-2 border rounded-md transition-all duration-300 bg-gray-100 ${
+                editable
+                  ? "border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                  : "border-gray-300"
+              }`}
               readOnly={!editable}
               onChange={handleChange}
             />
@@ -184,29 +231,46 @@ export default function Ap_Profile() {
               type="email"
               name="email"
               value={profileData.email || ""}
-              className={`w-full px-4 py-2 border rounded-md transition-all duration-300 bg-gray-100 ${editable ? 'border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200' : 'border-gray-300'}`}
-              readOnly={!editable}
-              onChange={handleChange}
+              className={`w-full px-4 py-2 border rounded-md transition-all duration-300 bg-gray-100 border-gray-300`}
+              readOnly // Keeps the email field read-only
             />
+            <span className="text-gray-500 text-sm">
+             Email cannot be edited.
+            </span>{" "}
+            {/* Optional info */}
           </div>
+
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Phone number</label>
             <input
               type="text"
               name="mobile"
               value={profileData.mobile || ""}
-              className={`w-full px-4 py-2 border rounded-md transition-all duration-300 bg-gray-100 ${editable ? 'border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200' : 'border-gray-300'}`}
+              className={`w-full px-4 py-2 border rounded-md transition-all duration-300 bg-gray-100 ${
+                editable
+                  ? "border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                  : "border-gray-300"
+              }`}
               readOnly={!editable}
               onChange={handleChange}
             />
           </div>
           <div className="flex justify-between mt-6">
-            <button type="button" className="bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition-colors duration-300" onClick={handleEdit}>
+            <button
+              type="button"
+              className="bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition-colors duration-300"
+              onClick={handleEdit}
+            >
               Edit
             </button>
             {editable && (
-              <button type="button" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-400 transition-colors duration-300" onClick={handleSave} disabled={savingForm}>
-                {savingForm ? 'Saving...' : 'Save profile'}
+              <button
+                type="button"
+                className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-400 transition-colors duration-300"
+                onClick={handleSave}
+                disabled={savingForm}
+              >
+                {savingForm ? "Saving..." : "Save profile"}
               </button>
             )}
           </div>
