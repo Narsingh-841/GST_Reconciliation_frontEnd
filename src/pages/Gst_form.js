@@ -140,22 +140,25 @@ export default function Gst_Form() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
+  
+    // Convert date format if the field is a date
+    const formattedValue = name === "From" || name === "To" ? formatDate(value) : value;
+  
     setFormData({
       ...formData,
-      [name]: value,
+      [name]: formattedValue,
     });
-
+  
     // Clear any ID error when user types
     if (idErrors[name]) {
       setIdErrors((prev) => ({ ...prev, [name]: "" }));
     }
-
+  
     // Hide password and security answer fields when switching inputs
     if (name.includes("Password") || name.includes("Security_Answer")) {
       const newShowPassword = {};
       const newShowSecurityAnswers = {};
-
+  
       // Hide all password and security answer fields
       for (const field of Object.keys(formData)) {
         if (field.includes("Password")) {
@@ -165,12 +168,26 @@ export default function Gst_Form() {
           newShowSecurityAnswers[field] = false;
         }
       }
-
+  
       setShowPassword(newShowPassword);
       setShowSecurityAnswers(newShowSecurityAnswers);
     }
   };
-
+  
+  // Helper function to format date from yyyy-mm-dd to dd/mm/yyyy
+  const formatDate = (dateString) => {
+    if (!dateString) return "";
+    const [year, month, day] = dateString.split("-");
+    return `${day}/${month}/${year}`;
+  };
+  
+  // Helper function to format date for the input (dd/mm/yyyy to yyyy-mm-dd)
+  const formatDateForInput = (dateString) => {
+    if (!dateString) return "";
+    const [day, month, year] = dateString.split("/");
+    return `${year}-${month}-${day}`;
+  };
+  
   const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
@@ -362,14 +379,14 @@ export default function Gst_Form() {
                   </label>
                   {fieldObj.name === "From" || fieldObj.name === "To" ? (
                     <input
-                      type="date"
-                      name={fieldObj.name}
-                      value={formData[fieldObj.name] || ""}
-                      onChange={handleChange}
-                      placeholder={fieldObj.hint}
-                      className="p-2 block w-full border border-gray-400 rounded-md"
-                      required
-                    />
+                    type="date"
+                    name={fieldObj.name}
+                    value={formatDateForInput(formData[fieldObj.name]) || ""}
+                    onChange={handleChange}
+                    placeholder={fieldObj.hint}
+                    className="p-2 block w-full border border-gray-400 rounded-md"
+                    required
+                  />
                   ) : fieldObj.name.toLowerCase().includes("password") ? (
                     <div className="relative">
                       <input
